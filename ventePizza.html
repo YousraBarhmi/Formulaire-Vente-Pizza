@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table, th, tr, td {
+            border: 1px solid;
+        }
+        input{
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; font-weight: bolder;">Vente Pizza</h1>
+    <form>
+        <label for="nom">Nom du client : </label>
+        <input id="nom" type="text" value="yousra"><br>
+        <label for="adrs">Adresse : </label>
+        <input id="adrs" type="text" value="yous@gmail.com">
+
+        <h2 style="text-align: center;">Produits à acheter</h2>
+        <table style="width: 50%;">
+            <tr>
+                <th>Nom du produit</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+            </tr>
+            <tr>
+                <td>Pizza à fromage</td>
+                <td id="pr1">80</td>
+                <td><input id="qte-frm" type="number" value="0"></td>
+            </tr>
+            <tr>
+                <td>Pizza herbo</td>
+                <td id="pr2">75</td>
+                <td><input id="qte-herb" type="number" value="0"></td>
+            </tr>
+            <tr>
+                <td>Pizza viande hachée</td>
+                <td id="pr3">100</td>
+                <td><input id="qte-vh" type="number" value="0"></td>
+            </tr>
+            <tr>
+                <td>Pizza fruit de mer</td>
+                <td id="pr4">120</td>
+                <td><input id="qte-fm" type="number" value="0"></td>
+            </tr>
+        </table>
+        <div class="paiement" style="border: 1px solid; width: 50%; margin: 0 30%; padding: 10px;">
+            <p>Paiement par :</p>
+            <input type="radio" id="pcarte" name="paie" checked>
+            <label for="pcarte">Carte bancaire</label>
+            <input type="radio" id="pcheque" name="paie">
+            <label for="pcheque">Chèque</label><br>
+            <label for="ncarte">Numéro de la carte bancaire :</label>
+            <input type="text" id="ncarte" ><br>
+            <input type="submit" value="Envoyer" id="sub">
+        </div>
+    </form>
+    <p id="messg">Merci de votre visite. Le montant de votre commande est : <span id="montant"></span></p>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('form');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const messageElement = document.getElementById('messg');
+                const qt1 = parseInt(document.getElementById('qte-frm').value, 10);
+                const prix1 = parseInt(document.getElementById('pr1').textContent, 10);
+                const qt2 = parseInt(document.getElementById('qte-herb').value, 10);
+                const prix2 = parseInt(document.getElementById('pr2').textContent, 10);
+                const qt3 = parseInt(document.getElementById('qte-vh').value, 10);
+                const prix3 = parseInt(document.getElementById('pr3').textContent, 10);
+                const qt4 = parseInt(document.getElementById('qte-fm').value, 10);
+                const prix4 = parseInt(document.getElementById('pr4').textContent, 10);
+
+                if (qt1 >= 0 && qt2 >= 0 && qt3 >= 0 && qt4 >= 0) {
+                    const totalAmount = qt1 * prix1 + qt2 * prix2 + qt3 * prix3 + qt4 * prix4;
+                    messageElement.textContent = "Merci de votre visite. Le montant de votre commande est : "+ totalAmount + " Dhs.";
+                    messageElement.style.color = 'black';
+                } else {
+                    messageElement.innerHTML = "Veuillez entrer une quantité valide.";
+                    messageElement.style.color = 'red';
+                    // document.getElementById('messg').innerHTML = "Veuillez entrer une quantité valide.";
+                }
+            });
+            const pcarteRadio = document.getElementById("pcarte");
+            const input = document.getElementById("ncarte");
+
+            document.addEventListener("change", function () {
+                if (pcarteRadio.checked) {
+                    input.disabled = false;
+                } else {
+                    input.disabled = true;
+                }
+                // input.disabled = !pcarteRadio.checked;
+            });
+
+        });
+    </script>
+</body>
+</html>
